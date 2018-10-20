@@ -49,8 +49,6 @@ RUN /root/ctf-tools/bin/manage-tools -s setup && echo "export PATH=$PATH:/root/c
 #-------------------------------------#
 # Installing tools                    #
 #-------------------------------------#
-#RUN /root/ctf-tools/bin/manage-tools -v install pwntools
-#RUN /root/ctf-tools/bin/manage-tools -v install radare2
 
 WORKDIR /root
 ENTRYPOINT ["/bin/zsh"]

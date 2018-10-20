@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-if [[ -z ${2} ]]; then
+if [[ -z ${1} ]]; then
     echo -e "Missing argument box name."
-    echo "Usage: ./run.sh <container name> <image name>"
+    echo "Usage: ./run.sh <container name>"
     exit 0
 fi
 
@@ -15,7 +15,7 @@ docker run -it -d \
 	--name ${box_name} \
 	--privileged \
     --mount type=bind,source="$(pwd)/pwnbox-${box_name}",target=/root/shared \
-	${2}
+	platypew/pwnbox
 
 echo "
 P)ppppp                     B)bbbb                   

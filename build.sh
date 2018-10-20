@@ -1,1 +1,1 @@
-docker build -t pwnbox .
+docker build -t platypew/pwnbox .
