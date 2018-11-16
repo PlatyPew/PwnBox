@@ -11,20 +11,20 @@ box_name=${1}
 mkdir $(pwd)/pwnbox-${box_name}
 
 docker run -it -d \
-	-h ${box_name} \
-	--name ${box_name} \
-	--privileged \
+    -h ${box_name} \
+    --name ${box_name} \
+    --privileged \
     --mount type=bind,source="$(pwd)/pwnbox-${box_name}",target=/root/shared \
-	platypew/pwnbox
+    platypew/pwnbox
 
 echo "
-P)ppppp                     B)bbbb                   
-P)    pp                    B)   bb                  
-P)ppppp  w)      WW n)NNNN  B)bbbb    o)OOO  x)   XX 
-P)       w)  WW  WW n)   NN B)   bb  o)   OO   x)X   
-P)       w)  WW  WW n)   NN B)    bb o)   OO   x)X   
-P)        w)WW WWW  n)   NN B)bbbbb   o)OOO  x)   XX 
-                                    
+P)ppppp                     B)bbbb
+P)    pp                    B)   bb
+P)ppppp  w)      WW n)NNNN  B)bbbb    o)OOO  x)   XX
+P)       w)  WW  WW n)   NN B)   bb  o)   OO   x)X
+P)       w)  WW  WW n)   NN B)    bb o)   OO   x)X
+P)        w)WW WWW  n)   NN B)bbbbb   o)OOO  x)   XX
+
                                     By: Platy Pew
 "
 
