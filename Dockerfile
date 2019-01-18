@@ -23,15 +23,8 @@ RUN mkdir /root/shared
 # Installing vimrc                    #
 #-------------------------------------#
 RUN mkdir -p /root/.vim/colors && \
-    wget https://raw.githubusercontent.com/morhetz/gruvbox/master/colors/gruvbox.vim -O /root/.vim/colors/gruvbox.vim
-COPY vimrc /root/.vimrc
-
-#-------------------------------------#
-# Remove packages                     #
-#-------------------------------------#
-RUN apt-get -y autoremove && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    wget https://raw.githubusercontent.com/morhetz/gruvbox/master/colors/gruvbox.vim -O /root/.vim/colors/gruvbox.vim && \
+    echo "syntax on\ncolorscheme gruvbox\nset number\nset termguicolors\nhighlight Normal ctermfg=grey ctermbg=darkblue\nset encoding=UTF-8\nset backspace=eol,start,indent\nset whichwrap+=<,>,h,l\nset ai\nset si\nset wrap\nset tabstop=4 shiftwidth=4\nset lazyredraw\nset ttyfast\nmap <C-j> <C-W>j\nmap <C-k> <C-W>k\nmap <C-h> <C-W>h\nmap <C-l> <C-W>l\nmap <C-t><left> :tabn<cr>\nmap <C-t><right> :tabN<cr>" > /root/.vimrc
 
 #-------------------------------------#
 # Configuring enviroment              #
@@ -47,12 +40,23 @@ RUN chsh -s /bin/zsh
 #-------------------------------------#
 RUN git clone https://github.com/zardus/ctf-tools.git /root/ctf-tools
 RUN /root/ctf-tools/bin/manage-tools -s setup && \
+    /root/ctf-tools/bin/ctf-tools-pip install appdirs && \
     echo "export PATH=$PATH:/root/ctf-tools/bin" >> /root/.zshrc && \
-    echo "source $(which ctf-tools-venv-activate)" >> /root/.zshrc
+    echo "source /root/ctf-tools/bin/ctf-tools-venv-activate" >> /root/.zshrc
+
+#-------------------------------------#
+# Remove packages                     #
+#-------------------------------------#
+RUN apt-get -y autoremove && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #-------------------------------------#
 # Installing tools                    #
 #-------------------------------------#
 
+#-------------------------------------#
+# Configuring environment             #
+#-------------------------------------#
 WORKDIR /root
 ENTRYPOINT ["/bin/zsh"]
