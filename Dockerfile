@@ -11,7 +11,7 @@ RUN apt-get install -y \
     python3-dev python-pip python3-pip default-jdk ruby net-tools \
     nasm vim zsh git strace \
     ltrace netcat nmap wget exiftool \
-    unzip man-db manpages-dev automake subversion \
+    unzip man-db manpages-dev automake \
     virtualenvwrapper sudo virtualenvwrapper ca-certificates curl
 
 #-------------------------------------#
@@ -36,7 +36,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Configuring enviroment              #
 #-------------------------------------#
 RUN git clone https://github.com/robbyrussell/oh-my-zsh.git /root/.oh-my-zsh
-RUN cp /root/.oh-my-zsh/templates/zshrc.zsh-template /root/.zshrc
+RUN cp /root/.oh-my-zsh/templates/zshrc.zsh-template /root/.zshrc && echo "export LANG=C.UTF-8" >> /root/.zshrc
 RUN curl -sSL git.io/jovial | bash
 RUN chsh -s /bin/zsh
 
