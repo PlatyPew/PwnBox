@@ -3,7 +3,7 @@
 if [[ -z ${1} ]]; then
     echo -e "Missing argument box name."
     echo "Usage: ./run.sh <container name>"
-    exit 0
+    exit 1
 fi
 
 box_name=${1}
