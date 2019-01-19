@@ -21,7 +21,7 @@ docker run -it -d \
 
 if [ $? -ne 0 ]; then
     echo "Attempting to start container"
-    docker start ${1}
+    docker start ${box_name}
 fi
 
 echo "
