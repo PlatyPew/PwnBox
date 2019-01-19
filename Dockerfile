@@ -9,15 +9,10 @@ RUN apt-get update --fix-missing && apt-get -y upgrade
 RUN apt-get install -y \
     build-essential gcc-multilib g++-multilib libtool python-dev \
     python3-dev python-pip python3-pip default-jdk ruby net-tools \
-    nasm vim zsh git strace \
+    nasm vim zsh git strace tmux \
     ltrace netcat nmap wget exiftool \
     unzip man-db manpages-dev automake \
     virtualenvwrapper sudo virtualenvwrapper ca-certificates curl
-
-#-------------------------------------#
-# Mounting volume                     #
-#-------------------------------------#
-RUN mkdir /root/shared
 
 #-------------------------------------#
 # Installing vimrc                    #
@@ -52,8 +47,9 @@ RUN apt-get -y autoremove && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #-------------------------------------#
-# Installing tools                    #
+# Mounting volume                     #
 #-------------------------------------#
+RUN mkdir /root/shared
 
 #-------------------------------------#
 # Configuring environment             #
