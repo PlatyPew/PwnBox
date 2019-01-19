@@ -1,18 +1,19 @@
-FROM ubuntu:latest
+FROM ubuntu:18.04
 
 RUN dpkg --add-architecture i386
-RUN apt-get update --fix-missing && apt-get -y upgrade
 
 #-------------------------------------#
 # Install packages from Ubuntu repos  #
 #-------------------------------------#
-RUN apt-get install -y \
-    build-essential gcc-multilib g++-multilib libtool python-dev \
-    python3-dev python-pip python3-pip default-jdk ruby net-tools \
-    nasm vim zsh git strace tmux \
-    ltrace netcat nmap wget exiftool \
-    unzip man-db manpages-dev automake \
-    virtualenvwrapper sudo virtualenvwrapper ca-certificates curl
+RUN apt-get update --fix-missing && \
+    apt-get install -y \
+        build-essential gcc-multilib g++-multilib libtool python-dev \
+        python3-dev python-pip python3-pip default-jdk ruby net-tools \
+        nasm vim zsh git strace \
+        ltrace netcat nmap wget exiftool \
+        unzip man-db manpages-dev automake \
+        virtualenvwrapper ca-certificates curl tmux sudo \
+        --no-install-recommends
 
 #-------------------------------------#
 # Installing vimrc                    #
