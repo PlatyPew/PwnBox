@@ -48,11 +48,6 @@ RUN apt-get -y autoremove && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #-------------------------------------#
-# Mounting volume                     #
-#-------------------------------------#
-RUN mkdir /root/shared
-
-#-------------------------------------#
 # Configuring environment             #
 #-------------------------------------#
 WORKDIR /root

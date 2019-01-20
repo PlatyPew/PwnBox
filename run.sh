@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+alias docker="docker.exe"
 if [ -z ${1} ]; then
     echo -e "Missing argument box name."
     echo "Usage: ${0} <container name>"
@@ -7,15 +8,11 @@ fi
 
 box_name=${1}
 
-echo "Making directory"
-mkdir $(pwd)/pwnbox-${box_name} 2> /dev/null
-
 echo "Attempting to run container"
 docker run -it -d \
     -h ${box_name} \
     --name ${box_name} \
     --privileged \
-    --mount type=bind,source="$(pwd)/pwnbox-${box_name}",target=/root/shared \
     platypew/pwnbox
 
 if [ $? -ne 0 ]; then

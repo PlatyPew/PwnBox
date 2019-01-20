@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+alias docker="docker.exe"
 if [ -z ${1} ]; then
     echo -e "Missing argument box name."
     echo "Usage: ${0} <container name>"
@@ -6,9 +7,6 @@ if [ -z ${1} ]; then
 fi
 
 box_name=${1}
-
-echo "Cleaning directory"
-rmdir $(pwd)/pwnbox-${box_name}
 
 echo "Attempting to remove container"
 docker rm ${box_name} -f
