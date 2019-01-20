@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-alias docker="docker.exe"
 if [ -z ${1} ]; then
     echo -e "Missing argument box name."
     echo "Usage: ${0} <container name>"
@@ -9,7 +8,7 @@ fi
 box_name=${1}
 
 echo "Attempting to remove container"
-docker rm ${box_name} -f
+docker.exe rm ${box_name} -f
 
 echo "
 Thank you for using
