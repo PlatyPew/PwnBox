@@ -20,7 +20,7 @@ RUN apt-get update --fix-missing && \
 #-------------------------------------#
 RUN mkdir -p /root/.vim/colors && \
     wget https://raw.githubusercontent.com/morhetz/gruvbox/master/colors/gruvbox.vim -O /root/.vim/colors/gruvbox.vim && \
-    echo "syntax on\ncolorscheme gruvbox\nset number\nset termguicolors\nhighlight Normal ctermfg=grey ctermbg=darkblue\nset encoding=UTF-8\nset backspace=eol,start,indent\nset whichwrap+=<,>,h,l\nset ai\nset si\nset wrap\nset tabstop=4 shiftwidth=4\nset lazyredraw\nset ttyfast\nmap <C-j> <C-W>j\nmap <C-k> <C-W>k\nmap <C-h> <C-W>h\nmap <C-l> <C-W>l\nmap <C-t><left> :tabn<cr>\nmap <C-t><right> :tabN<cr>\nset splitright\nnmap <leader>s :vsp \| term ++curwin<CR>exec zsh<CR>clear<CR>\ntnoremap <Esc> <C-\><C-n>" > /root/.vimrc
+    echo "syntax on\ncolorscheme gruvbox\nset number\nset termguicolors\nhighlight Normal ctermfg=grey ctermbg=darkblue\nset encoding=UTF-8\nset backspace=eol,start,indent\nset whichwrap+=<,>,h,l\nset ai\nset si\nset wrap\nset tabstop=4 shiftwidth=4\nset lazyredraw\nset ttyfast\nmap <C-j> <C-W>j\nmap <C-k> <C-W>k\nmap <C-h> <C-W>h\nmap <C-l> <C-W>l\nmap <C-t><left> :tabn<cr>\nmap <C-t><right> :tabN<cr>\nset splitright\nnmap <leader>s :vsp \| set nonumber \| term ++curwin<CR>exec zsh<CR>clear<CR>\ntnoremap <Esc> <C-\><C-n>" > /root/.vimrc
 
 #-------------------------------------#
 # Configuring enviroment              #
