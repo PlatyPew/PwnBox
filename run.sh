@@ -5,10 +5,12 @@ if [ -z ${1} ]; then
     exit 1
 fi
 
+source <(docker-machine.exe env dev --shell bash | sed 's?\\?/?g;s?C:/?/mnt/c/?g')
+
 box_name=${1}
 
 echo "Attempting to run container"
-docker.exe run -it -d \
+docker run -it -d \
     -h ${box_name} \
     --name ${box_name} \
     --privileged \
@@ -16,7 +18,7 @@ docker.exe run -it -d \
 
 if [ $? -ne 0 ]; then
     echo "Attempting to start container"
-    docker.exe start ${box_name}
+docker start ${box_name}
 fi
 
 echo "
@@ -31,4 +33,4 @@ P)        w)WW WWW  n)   NN B)bbbbb   o)OOO  x)   XX
 "
 
 # Get a shell
-docker.exe attach ${box_name}
+docker attach ${box_name}

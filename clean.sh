@@ -5,10 +5,12 @@ if [ -z ${1} ]; then
     exit 1
 fi
 
+source <(docker-machine.exe env dev --shell bash | sed 's?\\?/?g;s?C:/?/mnt/c/?g')
+
 box_name=${1}
 
 echo "Attempting to remove container"
-docker.exe rm ${box_name} -f
+docker rm ${box_name} -f
 
 echo "
 Thank you for using
