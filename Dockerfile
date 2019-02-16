@@ -25,7 +25,7 @@ RUN mkdir -p /root/.vim/colors && \
 #-------------------------------------#
 RUN git clone https://github.com/robbyrussell/oh-my-zsh.git /root/.oh-my-zsh
 RUN cp /root/.oh-my-zsh/templates/zshrc.zsh-template /root/.zshrc && \
-    echo "export LANG=C.UTF-8" >> /root/.zshrc
+    echo "export LC_ALL=C.UTF-8" >> /root/.zshrc
 RUN curl -sSL git.io/jovial | bash
 RUN chsh -s /bin/zsh
 
