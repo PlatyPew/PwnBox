@@ -15,7 +15,7 @@ docker run -it -d \
     -h ${box_name} \
     --name ${box_name} \
     --privileged \
-    --mount type=bind,source="$(pwd)/pwnbox-${box_name}",target=/root/shared \
+    --mount type=bind,source="$(pwd)/pwnbox-${box_name}",target=/mnt/shared \
     platypew/pwnbox
 
 if [ $? -ne 0 ]; then

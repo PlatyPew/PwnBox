@@ -9,7 +9,7 @@ RUN apt-get update --fix-missing && \
     apt-get install -y \
         build-essential gcc-multilib g++-multilib libtool python-dev \
         python3-dev python-pip python3-pip net-tools nasm vim zsh git \
-        strace ltrace netcat nmap wget unzip man-db manpages-dev \
+        strace ltrace netcat nmap wget unzip man-db manpages-dev autojump \
         automake virtualenvwrapper ca-certificates curl tmux sudo \
         --no-install-recommends
 
@@ -23,32 +23,36 @@ RUN mkdir -p /root/.vim/colors && \
 #-------------------------------------#
 # Configuring enviroment              #
 #-------------------------------------#
-RUN git clone https://github.com/robbyrussell/oh-my-zsh.git /root/.oh-my-zsh
-RUN cp /root/.oh-my-zsh/templates/zshrc.zsh-template /root/.zshrc && \
-    echo "export LC_ALL=C.UTF-8" >> /root/.zshrc
-RUN curl -sSL git.io/jovial | bash
-RUN chsh -s /bin/zsh
+RUN git clone https://github.com/robbyrussell/oh-my-zsh.git /root/.oh-my-zsh && \
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting && \
+    touch /root/.zshrc && \
+    curl -sSL git.io/jovial | bash && \
+    chsh -s /bin/zsh
 
 #-------------------------------------#
 # Installing ctf-tools by zardus      #
 #-------------------------------------#
-RUN git clone https://github.com/zardus/ctf-tools.git /root/ctf-tools
-RUN /root/ctf-tools/bin/manage-tools -s setup && \
-    /root/ctf-tools/bin/ctf-tools-pip install appdirs && \
-    echo "export PATH=$PATH:/root/ctf-tools/bin" >> /root/.zshrc && \
-    echo "source /root/ctf-tools/bin/ctf-tools-venv-activate" >> /root/.zshrc
+RUN git clone https://github.com/zardus/ctf-tools.git /root/.ctf-tools && \
+    /root/.ctf-tools/bin/manage-tools -s setup && \
+    /root/.ctf-tools/bin/ctf-tools-pip install appdirs
+
+#-------------------------------------#
+# Updating zshrc                      #
+#-------------------------------------#
+RUN echo "plugins=(\n  git\n  autojump\n  urltools\n  bgnotify\n  jovial\n  zsh-syntax-highlighting)\nZSH_THEME='jovial'\nDISABLE_UNTRACKED_FILES_DIRTY='true'\nexport ZSH=/root/.oh-my-zsh\nsource \$ZSH/oh-my-zsh.sh\nsource /root/.ctf-tools/bin/ctf-tools-venv-activate\nexport LC_ALL=C.UTF-8\nexport PATH=/root/.ctf-tools/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\nexport PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.ctf-tools/bin\nZSH_HIGHLIGHT_STYLES[arg0]='fg=green,bold'" > /root/.zshrc
 
 #-------------------------------------#
 # Remove packages                     #
 #-------------------------------------#
 RUN apt-get -y autoremove && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    rm -rvf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    rm -rvf /root/.wget-hsts /root/.cache
 
 #-------------------------------------#
 # Mounting volume                     #
 #-------------------------------------#
-RUN mkdir /root/shared
+RUN mkdir /mnt/shared
 
 #-------------------------------------#
 # Configuring environment             #
