@@ -18,8 +18,10 @@ RUN apt-get update --fix-missing && \
 # Installing vimrc                    #
 #-------------------------------------#
 RUN mkdir -p /root/.vim/colors && \
-    wget https://raw.githubusercontent.com/morhetz/gruvbox/master/colors/gruvbox.vim -O /root/.vim/colors/gruvbox.vim && \
-    echo "syntax on\ncolorscheme gruvbox\nset termguicolors\nhighlight Normal ctermfg=grey ctermbg=darkblue\nset number\nset encoding=UTF-8\nset backspace=eol,start,indent\nset whichwrap+=<,>,h,l\nset autoindent\nset smartindent\nset wrap\nset tabstop=4 shiftwidth=4 \nset tabstop=4\nset softtabstop=4\nset expandtab\nset list listchars=tab:»·,trail:·,nbsp:·\nset splitright\nset lazyredraw\nset ttyfast\nset foldmethod=syntax\nset foldmethod=expr\nset showcmd\nset noruler\nset shell=/bin/zsh\nnmap <C-h> <C-W>h\nnmap <C-j> <C-W>j\nnmap <C-k> <C-W>k\nnmap <C-l> <C-W>l\nnmap <leader>s :vsp \| set nonumber \| term ++curwin<CR>\ntnoremap <Esc> <C-\><C-n>\nnnoremap ; :" > /root/.vimrc
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
+    echo "call plug#begin()\nPlug 'morhetz/gruvbox'\nPlug 'vim-airline/vim-airline'\nPlug 'vim-airline/vim-airline-themes'\nPlug 'ryanoasis/vim-devicons'\nPlug 'vim-python/python-syntax', {'for': 'python'}\nPlug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}\nPlug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}\nPlug 'terryma/vim-multiple-cursors'\nPlug 'jiangmiao/auto-pairs'\nPlug 'vim-scripts/LargeFile'\nPlug 'w0rp/ale'\ncall plug#end()\nsyntax on\ncolorscheme gruvbox\nset termguicolors\nhighlight Normal ctermfg=grey ctermbg=darkblue\nset number\nset encoding=UTF-8\nset backspace=eol,start,indent\nset whichwrap+=<,>,h,l\nset autoindent\nset smartindent\nset wrap\nset tabstop=4 shiftwidth=4\nset tabstop=4\nset softtabstop=4\nset expandtab\nset list listchars=tab:»·,trail:·,nbsp:·\nset splitright\nset lazyredraw\nset ttyfast\nset foldmethod=syntax\nset foldmethod=expr\nset showcmd\nset noruler\nset shell=/bin/zsh\nset noshowmode\nset cursorline\nnmap <C-h> <C-W>h\nnmap <C-j> <C-W>j\nnmap <C-k> <C-W>k\nnmap <C-l> <C-W>l\nnmap <silent><leader>s :vsp \| set nonumber \| term ++curwin<CR>\ntnoremap <Esc> <C-\><C-n>\nnnoremap ; :\nlet g:airline_powerline_fonts = 1\nlet g:airline_section_warning = ''\nlet g:airline_section_z = ' %{strftime(\"%-I:%M %p\")}'\nlet g:airline_theme='tomorrow'\nnmap <C-o> :NERDTreeToggle<CR>\nset ttimeoutlen=10" > /root/.vimrc && \
+    sed '/call plug#end/q' /root/.vimrc > /tmp/.vimrc && \
+    vim -u /tmp/.vimrc "+PlugInstall|qall"
 
 #-------------------------------------#
 # Configuring enviroment              #
@@ -35,7 +37,7 @@ RUN git clone https://github.com/robbyrussell/oh-my-zsh.git /root/.oh-my-zsh && 
 #-------------------------------------#
 RUN git clone https://github.com/zardus/ctf-tools.git /root/ctf-tools && \
     /root/ctf-tools/bin/manage-tools -s setup && \
-    /root/ctf-tools/bin/ctf-tools-pip install appdirs
+    /root/ctf-tools/bin/ctf-tools-pip install appdirs flake8
 
 #-------------------------------------#
 # Updating zshrc                      #
