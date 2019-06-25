@@ -1,3 +1,6 @@
+# Notice
+This pwnbox is no longer being maintained. Get the new pwnbox here: https://github.com/PlatyPew/pwnbox-v2
+
 # PlatyPew's PwnBox
 Because who needs a virtual machine?
 
